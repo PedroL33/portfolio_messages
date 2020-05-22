@@ -1,11 +1,9 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
-app.use(cors());
-
-var indexRouter = require('./routes/index');
-
 var app = express();
+app.use(cors());
+var indexRouter = require('./routes/index');
 var port = process.env.PORT || 3000;
 
 var mongoose = require('mongoose');
