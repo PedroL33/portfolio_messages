@@ -1,5 +1,7 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
+var cors = require('cors');
+app.use(cors());
 
 var indexRouter = require('./routes/index');
 
