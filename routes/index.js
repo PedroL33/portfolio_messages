@@ -24,11 +24,11 @@ router.post('/', [
     message.save((err, result) => {
       if(err) {
         return res.status(400).json({
-          message: "Something went wrong."
+          errors: [{msg: "Something went wrong."}]
         })
       }else {
         return res.status(200).json({
-          message: "Message recieved."
+          message: "Message sent."
         })
       }
     })
