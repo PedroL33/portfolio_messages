@@ -10,6 +10,7 @@ router.get('/', function(req, res) {
 
 router.post('/', [
   check('email').isEmail().withMessage("Invalid email."),
+  check('message').isLength({min: 1}).withMessage("Please include a message."),
   (req, res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()) {
@@ -28,7 +29,7 @@ router.post('/', [
         })
       }else {
         return res.status(200).json({
-          message: "Message sent."
+          message: "Thank you for the message. You will hear from me soon!"
         })
       }
     })
