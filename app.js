@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 var indexRouter = require('./routes/index');
-var projectsRouter = require('./routes/projects');
+// var projectsRouter = require('./routes/projects');
 app.use(cors());
 
 var port = process.env.PORT || 3000;
@@ -21,5 +21,5 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
-app.use('/project', projectsRouter);
+// app.use('/project', projectsRouter);
 app.listen(port);
