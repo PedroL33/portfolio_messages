@@ -5,7 +5,7 @@ const saltRounds = 10;
 
 exports.login = (req, res) => {
   User.find({Username: req.body.username}, (err, results) => {
-    if(err) {
+    if(err) {      
       return res.status(400).json({
         msg: "Something went wrong."
       })
