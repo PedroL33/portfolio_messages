@@ -8,14 +8,13 @@ exports.login = (req, res) => {
     User.find({Username: req.body.username}, (err, results) => {
       if(err) {      
         return res.status(400).json({
-          msg: "Something went wrong."
+          errors: "Something went wrong."
         })
       }else if(!results.length) {
         return res.status(400).json({
-          msg: "Authentication failed."
+          errors: "Authentication failed."
         })
       }else {
-        console.log(req.body.password, results[0].Password)
         bcrypt.compare(req.body.password, results[0].Password, function(err, valid) {
           if(err || !valid) {
             res.status(400).json({

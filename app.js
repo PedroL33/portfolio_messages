@@ -1,13 +1,14 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
-require('dotenv').config();
+const cors = require('cors');
 
-var cors = require('cors');
+require('dotenv').config();
 var app = express();
 
-var indexRouter = require('./routes/index');
-// var projectsRouter = require('./routes/projects');
 app.use(cors());
+
+var indexRouter = require('./routes/index');
+var projectsRouter = require('./routes/projects');
 
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
@@ -21,5 +22,5 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
-// app.use('/project', projectsRouter);
+app.use('/project', projectsRouter);
 app.listen(port);
