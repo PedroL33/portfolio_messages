@@ -11,4 +11,6 @@ router.post('/delete', auth.checkAuth, projectController.deleteProjects);
 
 router.post('/thumbnail/:id', auth.checkAuth, projectController.uploadThumbnail);
 
+router.post('/modal/:id', auth.checkAuth, projectController.uploadModal);
+
 module.exports = router;
