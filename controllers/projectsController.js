@@ -207,12 +207,12 @@ exports.uploadThumbnail = (req, res) => {
       Project.findById(req.params.id, (err, project) => {
         if(err) return res.status(400).json(err)
         deleteFile(project.thumbImg, err => {
-          if(err) return next(err)
+          if(err) return res.status(400).json({errors: err})
           project.thumbImg = data.Location
           project.save(err => {
             if(err) return res.status(400).json(err)
             return res.status(200).json({
-              msg: "Thumbnail image added."
+              success: "Thumbnail image added."
             })
           })
         });
@@ -240,20 +240,53 @@ exports.uploadModal = (req, res) => {
       Project.findById(req.params.id, (err, project) => {
         if(err) return res.status(400).json(err)
         deleteFile(project.modalImg, err => {
-          if(err) return next(err)
+          if(err) return res.status(400).json({
+            errors: err
+          })
           project.modalImg = data.Location
           project.save(err => {
             if(err) return res.status(400).json(err)
             return res.status(200).json({
-              msg: "Modal image added."
+              success: "Modal image added."
             })
           })
         });
       })
     } catch(err) {
-      return res.status(500).json({
+      return res.status(400).json({
         error: "Something went wrong."
       })
     }
   })
+}
+
+exports.editProject = (req, res) => {
+  try {
+    Project.findById(req.params.id, (err, doc) => {
+      if(err) return res.status(400).json({
+        errors: err.message
+      })
+      else {
+        doc.title = req.body.title ? req.body.title: doc.title
+        doc.summary = req.body.summary ? req.body.summary: doc.summary
+        doc.gitLink = req.body.gitLink ? req.body.gitLink: doc.gitLink
+        doc.liveLink = req.body.liveLink ? req.body.liveLink: doc.liveLink
+        doc.save((err, result) => {
+          if(err) {
+            return res.status(400).json({
+              errors: err.message
+            })
+          }else {
+            return res.status(200).json({
+              success: "Changes saved."
+            })
+          }
+        })
+      }
+    })
+  }catch(err) {
+    return res.status(400).json({
+      errors: err.message
+    })
+  }
 }

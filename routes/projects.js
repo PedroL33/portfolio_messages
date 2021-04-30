@@ -13,4 +13,6 @@ router.post('/thumbnail/:id', auth.checkAuth, projectController.uploadThumbnail)
 
 router.post('/modal/:id', auth.checkAuth, projectController.uploadModal);
 
+router.post('/edit/:id', auth.checkAuth, projectController.editProject);
+
 module.exports = router;
