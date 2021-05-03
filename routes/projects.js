@@ -15,4 +15,6 @@ router.post('/modal/:id', auth.checkAuth, projectController.uploadModal);
 
 router.post('/edit/:id', auth.checkAuth, projectController.editProject);
 
+router.post('/editTech/:id', auth.checkAuth, projectController.editTech);
+
 module.exports = router;

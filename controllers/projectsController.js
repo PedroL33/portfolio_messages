@@ -139,58 +139,10 @@ exports.deleteProjects = (req, res) => {
     return res.status(200).json({
       success: `Projects deleted.`
     })
-    // Project.deleteMany({
-    //   _id: {
-    //     $in: req.body.projects
-    //   }
-    // })
-    // .then(result => {
-    //   if(result.deletedCount==0) {
-    //     return res.status(400).json({
-    //       errors: "Projects could not be deleted."
-    //     })
-    //   }else {
-
-    //     return res.status(200).json({
-    //       success: `${result.deletedCount} projects deleted.`
-    //     })
-    //   }
-    // })
   }catch(err) {
     console.log(err)
   }
 }
-
-// exports.editTitle = (req, res) => {
-
-// }
-
-// exports.editSummary = (req, res) => {
-
-// }
-
-// exports.addFeature = (req, res) => {
-
-// }
-
-// exports.removeFeature = (req, res) => {
-
-// }
-
-// exports.editGitLink = (req, res) => {
-
-// }
-
-// exports.editLiveLink = (req, res) => {
-
-// }
-// exports.addTech = (req, res) => {
-
-// }
-
-// exports.removeTech = (req, res) => {
-
-// }
 
 exports.uploadThumbnail = (req, res) => {
   const form = new multiparty.Form();
@@ -289,4 +241,26 @@ exports.editProject = (req, res) => {
       errors: err.message
     })
   }
+}
+
+exports.editTech = (req, res) => {
+  Project.findById(req.params.id, (err, doc) => {
+    if(err) {
+      return res.status(400).json({
+        errors: err.message
+      })
+    }
+    doc.tech = req.body;
+    doc.save((err, results) => {
+      if(err) {
+        return res.status(400).json({
+          errors: err.message
+        })
+      }else {
+        return res.status(200).json({
+          success: "Changes saved."
+        })
+      }
+    })
+  })
 }
