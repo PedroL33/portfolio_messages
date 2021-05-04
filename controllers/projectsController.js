@@ -264,3 +264,31 @@ exports.editTech = (req, res) => {
     })
   })
 }
+
+exports.editFeatures = (req, res) => {
+  try {
+    Project.findById(req.params.id, (err, doc) => {
+      if(err) {
+        return res.status(400).json({
+          errors: err.message
+        })
+      }
+      doc.features = req.body;
+      doc.save((err, results) => {
+        if(err) {
+          return res.status(400).json({
+            errors: err.message
+          })
+        }else {
+          return res.status(200).json({
+            success: "Changes saved."
+          })
+        }
+      })
+    })
+  }catch(err) {
+    return res.status(400).json({
+      errors: err.message
+    })
+  }
+}
