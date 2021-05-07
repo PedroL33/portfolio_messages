@@ -216,7 +216,7 @@ exports.editProject = (req, res) => {
   try {
     Project.findById(req.params.id, (err, doc) => {
       if(err) return res.status(400).json({
-        errors: err.message
+        errors: "Server side error."
       })
       else {
         doc.title = req.body.title ? req.body.title: doc.title
@@ -230,7 +230,7 @@ exports.editProject = (req, res) => {
             })
           }else {
             return res.status(200).json({
-              success: "Changes saved."
+              success: result
             })
           }
         })
@@ -244,25 +244,31 @@ exports.editProject = (req, res) => {
 }
 
 exports.editTech = (req, res) => {
-  Project.findById(req.params.id, (err, doc) => {
-    if(err) {
-      return res.status(400).json({
-        errors: err.message
-      })
-    }
-    doc.tech = req.body;
-    doc.save((err, results) => {
+  try {
+    Project.findById(req.params.id, (err, doc) => {
       if(err) {
         return res.status(400).json({
-          errors: err.message
-        })
-      }else {
-        return res.status(200).json({
-          success: "Changes saved."
+          errors: "Something went wrong on the server."
         })
       }
+      doc.tech = req.body;
+      doc.save((err, results) => {
+        if(err) {
+          return res.status(400).json({
+            errors: err.message
+          })
+        }else {
+          return res.status(200).json({
+            success: results
+          })
+        }
+      })
     })
-  })
+  }catch(err) {
+    return res.status(400).json({
+      errors: err
+    })
+  }
 }
 
 exports.editFeatures = (req, res) => {
@@ -281,7 +287,7 @@ exports.editFeatures = (req, res) => {
           })
         }else {
           return res.status(200).json({
-            success: "Changes saved."
+            success: results
           })
         }
       })
