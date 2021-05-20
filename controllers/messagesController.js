@@ -25,7 +25,7 @@ exports.getMessages = [
           })
         }else {
           return res.status(200).json({
-            message: "Thank you for the message. You will hear from me soon!"
+            success: "Thank you for the message. You will hear from me soon!"
           })
         }
       })
